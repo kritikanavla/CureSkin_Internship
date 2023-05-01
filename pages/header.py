@@ -17,3 +17,4 @@ class Header(Page):
         actualText = self.get_url()
         print(actualText)
         assert "body" in actualText, f"body is not in url"
+
