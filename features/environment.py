@@ -6,7 +6,8 @@ from selenium.webdriver.firefox.options import Options
 #from selenium.webdriver.chrome.options import Options
 
 
-def browser_init(context):
+
+def browser_init(context, test_name):
     """
     :param context: Behave context
     """
@@ -19,8 +20,21 @@ def browser_init(context):
     options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
     # context.driver = webdriver.Chrome(service=service, chrome_options=options)
     # context.driver = webdriver.Chrome(service=service)
-    context.driver = webdriver.Firefox(service=service,  options=options)
+    #context.driver = webdriver.Firefox(service=service,  options=options)
 
+    desrired_cap = {
+        'browserName': 'Firefox',
+        'bstack:options': {
+            "os": "Windows",
+            "osVersion": "11",
+        },
+        'name': test_name
+    }
+
+    bs_user = 'kritikanavla_y0rCWl'
+    bs_key = 'LNhSDjgYxa3NTJwv91b9'
+    url = f"https://{bs_user}:{bs_key}@hub.browserstack.com/wd/hub"
+    context.driver= webdriver.Remote(url, desired_capabilities=desrired_cap)
     # context.browser = webdriver.Safari()
     print('Browser driver extracted')
 
@@ -34,7 +48,7 @@ def browser_init(context):
 
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
-    browser_init(context)
+    browser_init(context, scenario.name)
 
 
 def before_step(context, step):
