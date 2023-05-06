@@ -1,5 +1,5 @@
 Feature: Test Cureskin footer links
-
+@smoke
     Scenario: Verify footer links
         Given Open cureskin main page
         #When Search for the footer links under Our Policy list
