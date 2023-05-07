@@ -5,6 +5,10 @@ def open_cureskin(context):
     context.app.main_page.open_main_page()
 
 
+@when("Click on Hamburger Menu")
+def click_hamburger_menu(context):
+    context.app.header.click_hamburger_menu()
+
 @when("Click on 'Shop by category'")
 def click_shop_by_category(context):
     context.app.header.click_shop_by_category()

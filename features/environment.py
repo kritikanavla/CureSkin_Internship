@@ -11,8 +11,8 @@ from app.application import Application
 from selenium.webdriver.support.events import EventFiringWebDriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.options import Options
+#from selenium.webdriver.firefox.service import Service
+#from selenium.webdriver.firefox.options import Options
 from support.logger import logger, MyListener
 
 
@@ -24,21 +24,31 @@ def browser_init(context, test_name):
     :param context: Behave context
     """
     print('before drive extraction')
-
-    #service = Service(r"C:\Users\virat\source\chromedriver\chromedriver.exe")
-    service = Service(r"C:\Users\virat\source\geckodriver\geckodriver.exe")
     options = Options()
-    #options.headless = True
-    options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
-    # context.driver = webdriver.Chrome(service=service, chrome_options=options)
-    # context.driver = webdriver.Chrome(service=service)
-    #context.driver = webdriver.Firefox( service=service, options=options)
+    # options.headless = True
 
-    context.driver = EventFiringWebDriver(
-        webdriver.Firefox(service=service, options=options),
-        MyListener()
-        )
+    # chrome browser
+    service = Service(r"C:\Users\virat\source\chromedriver\chromedriver.exe")
+    mobile_emulation = {"deviceName": "iPhone XR"}
+    #options = webdriver.ChromeOptions()
+    #options.binary_location = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+    options.add_experimental_option("mobileEmulation", mobile_emulation)
+    #context.driver = webdriver.Chrome(service=service)
+    #context.driver = webdriver.Chrome(chrome_options=options)
+    context.driver = webdriver.Chrome(service=service, chrome_options=options)
 
+    # firefox browser
+    # service = Service(r"C:\Users\virat\source\geckodriver\geckodriver.exe")
+    # options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
+    # context.driver = webdriver.Firefox( service=service, options=options)
+
+    # EventFiringWebDriver
+    # context.driver = EventFiringWebDriver(
+    #     webdriver.Chrome(service=service, options=options),
+    #     MyListener()
+    #     )
+
+    # BrowerStack (remote driver)
     # desrired_cap = {
     #     'browserName': 'Firefox',
     #     'bstack:options': {
@@ -47,11 +57,12 @@ def browser_init(context, test_name):
     #     },
     #     'name': test_name
     # }
-
     # bs_user = 'kritikanavla_y0rCWl'
     # bs_key = 'LNhSDjgYxa3NTJwv91b9'
     # url = f"https://{bs_user}:{bs_key}@hub.browserstack.com/wd/hub"
     # context.driver = webdriver.Remote(url, desired_capabilities=desrired_cap)
+
+
     # context.browser = webdriver.Safari()
     print('Browser driver extracted')
 
